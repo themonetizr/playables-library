@@ -3042,19 +3042,21 @@ function Tag({
   selected = false,
   onRemove,
   onClick,
+  size = 'md',
   style = {},
   ...rest
 }) {
   const gold = tone === 'gold';
   const clickable = typeof onClick === 'function' && !onRemove;
+  const large = size === 'lg';
 
   // Base pill visuals, shared by all variants.
   const base = {
     display: 'inline-flex',
     alignItems: 'center',
     whiteSpace: 'nowrap',
-    gap: '6px',
-    fontSize: 'var(--fs-2xs)',
+    gap: large ? '8px' : '6px',
+    fontSize: large ? '15px' : 'var(--fs-2xs)',
     fontWeight: 'var(--fw-bold)',
     lineHeight: 1,
     borderRadius: 'var(--radius-pill)'
@@ -3106,7 +3108,7 @@ function Tag({
       background: gold ? 'var(--accent-soft)' : 'var(--surface-recessed)',
       color: gold ? 'var(--accent)' : 'var(--muted)',
       border: gold ? '1px solid var(--line-gold)' : '1px solid var(--border)',
-      padding: onRemove ? '6px 8px 6px 13px' : '6px 13px',
+      padding: large ? (onRemove ? '9px 10px 9px 17px' : '9px 17px') : (onRemove ? '6px 8px 6px 13px' : '6px 13px'),
       ...style
     }
   }, rest), /*#__PURE__*/React.createElement("span", null, children), onRemove && /*#__PURE__*/React.createElement("button", {
@@ -3117,8 +3119,8 @@ function Tag({
       display: 'inline-flex',
       alignItems: 'center',
       justifyContent: 'center',
-      width: '15px',
-      height: '15px',
+      width: large ? '18px' : '15px',
+      height: large ? '18px' : '15px',
       padding: 0,
       border: 'none',
       borderRadius: 'var(--radius-full)',
@@ -3137,8 +3139,8 @@ function Tag({
       e.currentTarget.style.opacity = 0.7;
     }
   }, /*#__PURE__*/React.createElement("svg", {
-    width: "9",
-    height: "9",
+    width: large ? "11" : "9",
+    height: large ? "11" : "9",
     viewBox: "0 0 24 24",
     fill: "none",
     stroke: "currentColor",
