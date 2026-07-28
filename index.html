@@ -41,6 +41,7 @@
     @media (max-width: 720px) {
       .mtz-header { padding: 0 16px !important; gap: 10px !important; }
       .mtz-kicker { display: none !important; }
+      .mtz-header-sep { display: none !important; }
       .mtz-header-count { display: none !important; }
       .mtz-header-cta { padding: 6px !important; }
 
@@ -72,7 +73,7 @@
   <header class="mtz-header" style="position: sticky; top: 0; z-index: 20; height: 64px; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 0 28px; background: rgba(11, 14, 37, 0.8); backdrop-filter: blur(12px) saturate(1.4); -webkit-backdrop-filter: blur(12px) saturate(1.4); border-bottom: 1px solid rgba(255, 255, 255, 0.08)">
     <div class="mtz-header-brand" style="display: flex; align-items: center; gap: 18px">
       <img src="assets/logo-horizontal-white.png" alt="Monetizr" style="height: 32px; width: auto; display: block">
-      <span style="width: 1px; height: 28px; background: var(--border-strong)"></span>
+      <span class="mtz-header-sep" style="width: 1px; height: 28px; background: var(--border-strong)"></span>
       <span class="mtz-kicker" style="font-size: 14px; font-weight: 700; letter-spacing: 0.84px; text-transform: uppercase; color: var(--faint)">Playables library</span>
     </div>
     <a href="#request" class="mtz-header-cta" style="display: flex; align-items: center; gap: 12px; padding: 7px 7px 7px 16px; border: 1px solid var(--border); border-radius: 100px; font-size: 13px; font-weight: 700; color: var(--text)" style-hover="border-color: var(--border-hover)">
