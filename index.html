@@ -39,11 +39,11 @@
 
 <div style="min-height: 100vh; background: var(--bg)">
 
-  <header style="position: sticky; top: 0; z-index: 20; height: 64px; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 0 28px; background: var(--bg); border-bottom: 1px solid var(--border-hairline)">
+  <header style="position: sticky; top: 0; z-index: 20; height: 64px; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 0 28px; background: rgba(11, 14, 37, 0.8); backdrop-filter: blur(12px) saturate(1.4); -webkit-backdrop-filter: blur(12px) saturate(1.4); border-bottom: 1px solid rgba(255, 255, 255, 0.08)">
     <div style="display: flex; align-items: center; gap: 18px">
       <img src="assets/logo-horizontal-white.png" alt="Monetizr" style="height: 32px; width: auto; display: block">
       <span style="width: 1px; height: 28px; background: var(--border-strong)"></span>
-      <x-import component-from-global-scope="MonetizrBlackbeltDesignSystem_e1017f.Eyebrow" from="ds/monetizr-blackbelt-design-system-e1017fb2-12d7-4713-ac6b-7211883feb12/_ds_bundle.js" hint-size="auto,16px">Playables library</x-import>
+      <span style="font-size: 14px; font-weight: 700; letter-spacing: 0.84px; text-transform: uppercase; color: var(--faint)">Playables library</span>
     </div>
     <a href="#request" style="display: flex; align-items: center; gap: 12px; padding: 7px 7px 7px 16px; border: 1px solid var(--border); border-radius: 100px; font-size: 13px; font-weight: 700; color: var(--text)" style-hover="border-color: var(--border-hover)">
       <span>{{ countLabel }}</span>
@@ -134,6 +134,8 @@
     </div>
 
   </section>
+
+  <div style="padding: 40px 28px 60px; text-align: center; font-size: 16.5px; color: var(--faint)">© Monetizr. All rights reserved.</div>
 
 </div>
 
