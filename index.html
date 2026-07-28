@@ -34,19 +34,49 @@
     a { color: var(--accent); text-decoration: none; }
     a:hover { color: var(--accent-hover); }
     @keyframes mtzHint { 0%,100% { transform: translateY(0); opacity: .5 } 50% { transform: translateY(5px); opacity: 1 } }
+
+    /* Mobile layout: everything above is a fixed desktop layout with
+       no wrapping fallback, so below we re-flow the header, hero, and
+       request-form grids for narrow viewports. */
+    @media (max-width: 720px) {
+      .mtz-header { padding: 0 16px !important; gap: 10px !important; }
+      .mtz-kicker { display: none !important; }
+      .mtz-header-count { display: none !important; }
+      .mtz-header-cta { padding: 6px !important; }
+
+      .mtz-hero {
+        grid-template-columns: 1fr !important;
+        min-height: auto !important;
+        gap: 36px !important;
+        padding: 40px 20px 56px !important;
+      }
+      .mtz-hero-text { max-width: 100% !important; }
+      .mtz-hero-title { font-size: 32px !important; }
+      .mtz-hero-media { width: 100% !important; }
+
+      .mtz-request-title { font-size: 30px !important; }
+      .mtz-request-actions { grid-template-columns: 1fr !important; }
+      .mtz-request-actions > div { justify-self: stretch !important; }
+      .mtz-request-actions > div:last-child button { width: 100% !important; justify-content: center !important; }
+    }
+
+    @media (max-width: 420px) {
+      .mtz-hero-title { font-size: 27px !important; }
+      .mtz-header-brand { gap: 10px !important; }
+    }
   </style>
 </helmet>
 
 <div style="min-height: 100vh; background: var(--bg)">
 
-  <header style="position: sticky; top: 0; z-index: 20; height: 64px; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 0 28px; background: rgba(11, 14, 37, 0.8); backdrop-filter: blur(12px) saturate(1.4); -webkit-backdrop-filter: blur(12px) saturate(1.4); border-bottom: 1px solid rgba(255, 255, 255, 0.08)">
-    <div style="display: flex; align-items: center; gap: 18px">
+  <header class="mtz-header" style="position: sticky; top: 0; z-index: 20; height: 64px; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 0 28px; background: rgba(11, 14, 37, 0.8); backdrop-filter: blur(12px) saturate(1.4); -webkit-backdrop-filter: blur(12px) saturate(1.4); border-bottom: 1px solid rgba(255, 255, 255, 0.08)">
+    <div class="mtz-header-brand" style="display: flex; align-items: center; gap: 18px">
       <img src="assets/logo-horizontal-white.png" alt="Monetizr" style="height: 32px; width: auto; display: block">
       <span style="width: 1px; height: 28px; background: var(--border-strong)"></span>
-      <span style="font-size: 14px; font-weight: 700; letter-spacing: 0.84px; text-transform: uppercase; color: var(--faint)">Playables library</span>
+      <span class="mtz-kicker" style="font-size: 14px; font-weight: 700; letter-spacing: 0.84px; text-transform: uppercase; color: var(--faint)">Playables library</span>
     </div>
-    <a href="#request" style="display: flex; align-items: center; gap: 12px; padding: 7px 7px 7px 16px; border: 1px solid var(--border); border-radius: 100px; font-size: 13px; font-weight: 700; color: var(--text)" style-hover="border-color: var(--border-hover)">
-      <span>{{ countLabel }}</span>
+    <a href="#request" class="mtz-header-cta" style="display: flex; align-items: center; gap: 12px; padding: 7px 7px 7px 16px; border: 1px solid var(--border); border-radius: 100px; font-size: 13px; font-weight: 700; color: var(--text)" style-hover="border-color: var(--border-hover)">
+      <span class="mtz-header-count">{{ countLabel }}</span>
       <span style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 13px; background: var(--accent-soft); border: 1px solid var(--line-gold); border-radius: 100px; color: var(--accent); font-weight: 900">Review request →</span>
     </a>
   </header>
@@ -56,15 +86,15 @@
   </a>
 
   <sc-for list="{{ items }}" as="item" hint-placeholder-count="3">
-    <section style="min-height: calc(100vh - 64px); display: grid; grid-template-columns: 1.05fr 0.95fr; align-items: center; gap: 72px; max-width: 1060px; margin: 0 auto; padding: 72px 28px 88px; box-sizing: border-box; border-bottom: 1px solid var(--border-hairline)">
+    <section class="mtz-hero" style="min-height: calc(100vh - 64px); display: grid; grid-template-columns: 1.05fr 0.95fr; align-items: center; gap: 72px; max-width: 1060px; margin: 0 auto; padding: 72px 28px 88px; box-sizing: border-box; border-bottom: 1px solid var(--border-hairline)">
 
-      <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 20px; max-width: 460px">
+      <div class="mtz-hero-text" style="display: flex; flex-direction: column; align-items: flex-start; gap: 20px; max-width: 460px">
         <div style="display: flex; align-items: center; gap: 12px">
           <x-import component-from-global-scope="MonetizrBlackbeltDesignSystem_e1017f.Eyebrow" from="ds/monetizr-blackbelt-design-system-e1017fb2-12d7-4713-ac6b-7211883feb12/_ds_bundle.js" hint-size="auto,16px">{{ item.index }}</x-import>
           <x-import component-from-global-scope="MonetizrBlackbeltDesignSystem_e1017f.Tag" from="ds/monetizr-blackbelt-design-system-e1017fb2-12d7-4713-ac6b-7211883feb12/_ds_bundle.js" hint-size="auto,26px">{{ item.category }}</x-import>
         </div>
 
-        <h2 style="margin: 0; font-size: 46px; line-height: 1.05; font-weight: 900; letter-spacing: -0.02em; color: var(--text); text-wrap: pretty">{{ item.name }}</h2>
+        <h2 class="mtz-hero-title" style="margin: 0; font-size: 46px; line-height: 1.05; font-weight: 900; letter-spacing: -0.02em; color: var(--text); text-wrap: pretty">{{ item.name }}</h2>
 
         <p style="margin: 0; font-size: 16.5px; line-height: 1.55; color: var(--muted); text-wrap: pretty">{{ item.mechanic }}</p>
 
@@ -79,8 +109,8 @@
         </div>
       </div>
 
-      <div style="display: flex; justify-content: center">
-        <div style="width: 270px; position: relative">
+      <div class="mtz-hero-media" style="display: flex; justify-content: center">
+        <div style="width: 270px; max-width: 100%; position: relative">
           <x-import component-from-global-scope="MonetizrBlackbeltDesignSystem_e1017f.PhoneFrame" from="ds/monetizr-blackbelt-design-system-e1017fb2-12d7-4713-ac6b-7211883feb12/_ds_bundle.js" hint-size="270px,580px">
             <div style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 24px; text-align: center; background: linear-gradient(160deg, var(--surface), var(--surface-recessed))">
               <x-import component-from-global-scope="MonetizrBlackbeltDesignSystem_e1017f.Eyebrow" from="ds/monetizr-blackbelt-design-system-e1017fb2-12d7-4713-ac6b-7211883feb12/_ds_bundle.js" hint-size="auto,16px">Preview</x-import>
@@ -96,7 +126,7 @@
 
   <section id="request" style="max-width: 900px; margin: 0 auto; padding: 96px 28px 48px">
     <x-import component-from-global-scope="MonetizrBlackbeltDesignSystem_e1017f.Eyebrow" from="ds/monetizr-blackbelt-design-system-e1017fb2-12d7-4713-ac6b-7211883feb12/_ds_bundle.js" hint-size="auto,16px">Your request</x-import>
-    <h2 style="margin: 14px 0 0; font-size: 38px; line-height: 1.1; font-weight: 900; letter-spacing: -0.02em; color: var(--text)">Which formats should we build for you?</h2>
+    <h2 class="mtz-request-title" style="margin: 14px 0 0; font-size: 38px; line-height: 1.1; font-weight: 900; letter-spacing: -0.02em; color: var(--text)">Which formats should we build for you?</h2>
     <p style="margin: 14px 0 0; font-size: 16.5px; line-height: 1.55; color: var(--muted); max-width: 620px">Your picks are listed below. Send them over and we reply with timings and the creative we need from you.</p>
     <p style="margin: 18px 0 0; font-size: 16.5px; line-height: 1.55; color: var(--faint); max-width: 620px"><span style="font-weight: 900; color: var(--accent)">NOTE: </span>Each preview is one build of the format. Templates differ in how far we can take them: some let you change layout and art direction freely, others hold their structure. Asset requirements and technical limits vary the same way. We confirm both for whatever you pick.</p>
 
@@ -121,7 +151,7 @@
         <p style="margin: 7px 0 0; font-size: 14.5px; color: var(--faint)">Nothing picked yet. Scroll back up and tick the formats you want.</p>
       </sc-if>
 
-      <div style="display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 16px; margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--border-hairline)">
+      <div class="mtz-request-actions" style="display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 16px; margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--border-hairline)">
         <x-import component-from-global-scope="MonetizrBlackbeltDesignSystem_e1017f.EmailInput" from="ds/monetizr-blackbelt-design-system-e1017fb2-12d7-4713-ac6b-7211883feb12/_ds_bundle.js" label="Work email" placeholder="you@brand.com" value="{{ email }}" on-change="{{ setEmail }}" hint-size="100%,74px"></x-import>
         <div>
           <x-import component-from-global-scope="MonetizrBlackbeltDesignSystem_e1017f.Button" from="ds/monetizr-blackbelt-design-system-e1017fb2-12d7-4713-ac6b-7211883feb12/_ds_bundle.js" disabled="{{ requestDisabled }}" onClick="{{ submit }}" hint-size="auto,50px">{{ requestLabel }}</x-import>
