@@ -94,7 +94,7 @@
     </section>
   </sc-for>
 
-  <section id="request" style="max-width: 900px; margin: 0 auto; padding: 96px 28px 120px">
+  <section id="request" style="max-width: 900px; margin: 0 auto; padding: 96px 28px 48px">
     <x-import component-from-global-scope="MonetizrBlackbeltDesignSystem_e1017f.Eyebrow" from="ds/monetizr-blackbelt-design-system-e1017fb2-12d7-4713-ac6b-7211883feb12/_ds_bundle.js" hint-size="auto,16px">Your request</x-import>
     <h2 style="margin: 14px 0 0; font-size: 38px; line-height: 1.1; font-weight: 900; letter-spacing: -0.02em; color: var(--text)">Which formats should we build for you?</h2>
     <p style="margin: 14px 0 0; font-size: 16.5px; line-height: 1.55; color: var(--muted); max-width: 620px">Your picks are listed below. Send them over and we reply with timings and the creative we need from you.</p>
@@ -129,13 +129,13 @@
       </div>
 
       <sc-if value="{{ submitted }}" hint-placeholder-val="{{ false }}">
-        <p style="margin: 20px 0 0; font-size: 14.5px; color: var(--text)">Your mail app should be open with {{ pickedCount }} formats listed, addressed to martins@monetizr.com and connect@monetizr.com. Hit send and we reply within one working day.</p>
+        <p style="margin: 20px 0 0; font-size: 14.5px; color: var(--text)">Your mail app should be open with {{ pickedCount }} formats listed, addressed to connect@monetizr.com. Hit send and we reply within one working day.</p>
       </sc-if>
     </div>
 
   </section>
 
-  <div style="padding: 40px 28px 60px; text-align: center; font-size: 16.5px; color: var(--faint)">© Monetizr. All rights reserved.</div>
+  <div style="padding: 20px 28px 40px; text-align: center; font-size: 16.5px; color: var(--faint)">© Monetizr. All rights reserved.</div>
 
 </div>
 
@@ -206,7 +206,7 @@ class Component extends DCLogic {
   state = { sel: {}, submitted: false, email: "", atRequest: false };
 
   send = (names) => {
-    const to = "martins@monetizr.com,connect@monetizr.com";
+    const to = "connect@monetizr.com";
     const body = [
       "Formats requested (" + names.length + "):",
       "",
