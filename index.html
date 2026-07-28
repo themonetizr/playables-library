@@ -29,7 +29,7 @@
   <link rel="stylesheet" href="ds/monetizr-blackbelt-design-system-e1017fb2-12d7-4713-ac6b-7211883feb12/styles.css">
   <script src="ds/monetizr-blackbelt-design-system-e1017fb2-12d7-4713-ac6b-7211883feb12/_ds_bundle.js"></script>
   <style>
-    html { scroll-behavior: smooth; scroll-snap-type: y proximity; }
+    html { scroll-behavior: smooth; }
     body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--font-sans); }
     a { color: var(--accent); text-decoration: none; }
     a:hover { color: var(--accent-hover); }
@@ -56,7 +56,7 @@
   </a>
 
   <sc-for list="{{ items }}" as="item" hint-placeholder-count="3">
-    <section style="min-height: calc(100vh - 64px); scroll-snap-align: start; display: grid; grid-template-columns: 1.05fr 0.95fr; align-items: center; gap: 72px; max-width: 1060px; margin: 0 auto; padding: 72px 28px 88px; box-sizing: border-box; border-bottom: 1px solid var(--border-hairline)">
+    <section style="min-height: calc(100vh - 64px); display: grid; grid-template-columns: 1.05fr 0.95fr; align-items: center; gap: 72px; max-width: 1060px; margin: 0 auto; padding: 72px 28px 88px; box-sizing: border-box; border-bottom: 1px solid var(--border-hairline)">
 
       <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 20px; max-width: 460px">
         <div style="display: flex; align-items: center; gap: 12px">
@@ -94,7 +94,7 @@
     </section>
   </sc-for>
 
-  <section id="request" style="scroll-snap-align: start; max-width: 900px; margin: 0 auto; padding: 96px 28px 120px">
+  <section id="request" style="max-width: 900px; margin: 0 auto; padding: 96px 28px 120px">
     <x-import component-from-global-scope="MonetizrBlackbeltDesignSystem_e1017f.Eyebrow" from="ds/monetizr-blackbelt-design-system-e1017fb2-12d7-4713-ac6b-7211883feb12/_ds_bundle.js" hint-size="auto,16px">Your request</x-import>
     <h2 style="margin: 14px 0 0; font-size: 38px; line-height: 1.1; font-weight: 900; letter-spacing: -0.02em; color: var(--text)">Which formats should we build for you?</h2>
     <p style="margin: 14px 0 0; font-size: 16.5px; line-height: 1.55; color: var(--muted); max-width: 620px">Your picks are listed below. Send them over and we reply with timings and the creative we need from you.</p>
