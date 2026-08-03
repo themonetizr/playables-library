@@ -53,6 +53,7 @@
       }
       .mtz-hero-text { max-width: 100% !important; }
       .mtz-hero-title { font-size: 32px !important; }
+      .mtz-page-title { font-size: 32px !important; }
       .mtz-hero-media { width: 100% !important; }
 
       .mtz-request-title { font-size: 30px !important; }
@@ -63,6 +64,7 @@
 
     @media (max-width: 420px) {
       .mtz-hero-title { font-size: 27px !important; }
+      .mtz-page-title { font-size: 27px !important; }
       .mtz-header-brand { gap: 10px !important; }
     }
   </style>
@@ -85,6 +87,17 @@
   <a href="#request" data-jump="1" aria-label="Jump to your request" title="Jump to your request" style="position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%); z-index: 30; display: flex; align-items: center; justify-content: center; width: 52px; height: 52px; background: var(--surface); border: 1px solid var(--border-strong); border-radius: 100px; box-shadow: 0 10px 24px rgba(0,0,0,.45); color: var(--muted); opacity: {{ jumpOpacity }}; pointer-events: {{ jumpEvents }}; transition: opacity 200ms var(--ease-out), transform 160ms var(--ease-out), background 160ms var(--ease-out), color 160ms var(--ease-out)" style-hover="background: var(--surface-hover); color: var(--text); transform: translateX(-50%) translateY(-2px)" style-active="transform: translateX(-50%) scale(0.94)">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M19 12l-7 7-7-7"></path></svg>
   </a>
+
+  <section style="max-width: 1060px; margin: 0 auto; padding: 64px 28px 8px">
+    <h1 class="mtz-page-title" style="margin: 0; font-size: 44px; line-height: 1.08; font-weight: 900; letter-spacing: -0.02em; color: var(--text); max-width: 760px; text-wrap: pretty">Pick a format to drive engagement.</h1>
+    <p style="margin: 16px 0 0; font-size: 17px; line-height: 1.6; color: var(--muted); max-width: 620px">Every format below is built for one thing: holding attention long enough for the player to act. Browse by mechanic, preview how each one plays, and add the ones you want built for your brand.</p>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 32px; padding-bottom: 32px; border-bottom: 1px solid var(--border-hairline)">
+      <sc-for list="{{ groups }}" as="group" hint-placeholder-count="5">
+        <x-import component-from-global-scope="MonetizrBlackbeltDesignSystem_e1017f.Tag" from="ds/monetizr-blackbelt-design-system-e1017fb2-12d7-4713-ac6b-7211883feb12/_ds_bundle.js" selected="{{ group.selected }}" onClick="{{ group.select }}" hint-size="auto,34px">{{ group.label }}</x-import>
+      </sc-for>
+    </div>
+  </section>
 
   <sc-for list="{{ items }}" as="item" hint-placeholder-count="3">
     <section class="mtz-hero" style="min-height: calc(100vh - 64px); display: grid; grid-template-columns: 1.05fr 0.95fr; align-items: center; gap: 72px; max-width: 1060px; margin: 0 auto; padding: 72px 28px 88px; box-sizing: border-box; border-bottom: 1px solid var(--border-hairline)">
@@ -233,8 +246,45 @@ const CATALOG = [
 const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 const pad = (n) => (n < 10 ? "0" + n : "" + n);
 
+// Formats are grouped by mechanic so the 55-strong catalog browses in
+// chunks instead of one long scroll. Order here is the tab order.
+const GROUPS = [
+  ["sports-arcade", "Sports & Arcade"],
+  ["reflex-speed", "Reflex & Speed"],
+  ["chance-rewards", "Chance & Rewards"],
+  ["puzzles-matching", "Puzzles & Matching"],
+  ["interactive-story", "Interactive & Story"],
+];
+
+const GROUP_OF = {
+  "Shoot": "sports-arcade", "Runner": "sports-arcade", "Shoot To Win": "sports-arcade",
+  "Delivery": "sports-arcade", "Basketball": "sports-arcade", "Bounce": "sports-arcade",
+  "Claw": "sports-arcade", "Jump": "sports-arcade", "Score": "sports-arcade",
+
+  "10 Seconds": "reflex-speed", "Shape Snap": "reflex-speed", "Whack-A-Mole": "reflex-speed",
+  "Tap To Win": "reflex-speed", "Pinata": "reflex-speed", "Catcher": "reflex-speed",
+  "Break Glass": "reflex-speed", "Crack Glass": "reflex-speed", "Clean Screen": "reflex-speed",
+
+  "Prediction": "chance-rewards", "Case Opening": "chance-rewards", "3D Spin": "chance-rewards",
+  "Multilayer Spin": "chance-rewards", "Simple Slot Machine": "chance-rewards", "Scratch and Win": "chance-rewards",
+  "Chest": "chance-rewards", "Choices": "chance-rewards", "Slot": "chance-rewards",
+  "Spin": "chance-rewards", "Game Night": "chance-rewards", "Swipe": "chance-rewards",
+  "Open Box": "chance-rewards", "Plinko": "chance-rewards",
+
+  "Sticky Jigsaw": "puzzles-matching", "Tile Pop": "puzzles-matching", "Tic-Tac-Toe": "puzzles-matching",
+  "Jigsaw": "puzzles-matching", "Memory": "puzzles-matching", "Connect": "puzzles-matching",
+  "Maze": "puzzles-matching", "Sliding Puzzle": "puzzles-matching", "Cup Shuffle": "puzzles-matching",
+  "Mix and Match": "puzzles-matching", "Blast": "puzzles-matching", "Match": "puzzles-matching",
+  "Cut": "puzzles-matching",
+
+  "Wordle": "interactive-story", "Video Endcard": "interactive-story", "Endcard AI": "interactive-story",
+  "Hotspot": "interactive-story", "Shelf Order": "interactive-story", "Image Slider": "interactive-story",
+  "Endcard": "interactive-story", "Survey": "interactive-story", "Quiz": "interactive-story",
+  "Carousel": "interactive-story",
+};
+
 class Component extends DCLogic {
-  state = { sel: {}, submitted: false, email: "", atRequest: false };
+  state = { sel: {}, submitted: false, email: "", atRequest: false, activeGroup: GROUPS[0][0] };
 
   send = (names) => {
     const to = "connect@monetizr.com";
@@ -358,30 +408,47 @@ class Component extends DCLogic {
   }
 
   renderVals() {
-    const total = CATALOG.length;
     const sel = this.state.sel;
-    const items = CATALOG.map(([name, category, mechanic], i) => {
+    const activeGroup = this.state.activeGroup;
+
+    // Full catalog (all groups) — used for the picked-list and group counts,
+    // since a pick made in one group must still show up after switching tabs.
+    const allItems = CATALOG.map(([name, category, mechanic]) => {
       const key = slug(name);
-      const on = !!sel[key];
-      return {
-        name, category, mechanic, key,
-        index: "Format " + pad(i + 1) + " / " + total,
-        video: "media/" + key + ".mp4",
-        videoNote: name + " preview goes here",
-        checked: on,
-        boxBg: on ? "var(--accent)" : "transparent",
-        boxBorder: on ? "var(--accent)" : "var(--border)",
-        tickOpacity: on ? 1 : 0,
-        actionLabel: on ? "Added to request" : "Add to request",
-        toggle: () => this.toggle(key),
-      };
+      return { name, category, mechanic, key, group: GROUP_OF[name], checked: !!sel[key] };
     });
-    const picked = items.filter((it) => it.checked).map((it) => ({
+
+    const groupCounts = {};
+    allItems.forEach((it) => { groupCounts[it.group] = (groupCounts[it.group] || 0) + 1; });
+
+    const visible = allItems.filter((it) => it.group === activeGroup);
+    const visibleTotal = visible.length;
+    const items = visible.map((it, i) => ({
+      ...it,
+      index: "Format " + pad(i + 1) + " / " + visibleTotal,
+      video: "media/" + it.key + ".mp4",
+      videoNote: it.name + " preview goes here",
+      boxBg: it.checked ? "var(--accent)" : "transparent",
+      boxBorder: it.checked ? "var(--accent)" : "var(--border)",
+      tickOpacity: it.checked ? 1 : 0,
+      actionLabel: it.checked ? "Added to request" : "Add to request",
+      toggle: () => this.toggle(it.key),
+    }));
+
+    const picked = allItems.filter((it) => it.checked).map((it) => ({
       name: it.name,
       remove: () => this.toggle(it.key),
     }));
+
+    const groups = GROUPS.map(([key, label]) => ({
+      key,
+      label: label + " (" + (groupCounts[key] || 0) + ")",
+      selected: key === activeGroup,
+      select: () => this.setState({ activeGroup: key }),
+    }));
+
     return {
-      items, picked,
+      items, picked, groups,
       pickedCount: picked.length,
       hasPicked: picked.length > 0,
       showClearAll: picked.length > 1,
