@@ -3107,7 +3107,7 @@ function Tag({
       ...base,
       background: gold ? 'var(--accent-soft)' : 'var(--surface-recessed)',
       color: gold ? 'var(--accent)' : 'var(--muted)',
-      border: gold ? '1px solid var(--line-gold)' : '1px solid var(--border)',
+      border: gold ? '1px solid var(--line-gold)' : '1px solid var(--line)',
       padding: large ? (onRemove ? '9px 10px 9px 17px' : '9px 17px') : (onRemove ? '6px 8px 6px 13px' : '6px 13px'),
       ...style
     }

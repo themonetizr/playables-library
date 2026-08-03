@@ -39,6 +39,7 @@
        no wrapping fallback, so below we re-flow the header, hero, and
        request-form grids for narrow viewports. */
     @media (max-width: 720px) {
+      .mtz-title-break { display: none; }
       .mtz-header { padding: 0 16px !important; gap: 10px !important; }
       .mtz-kicker { display: none !important; }
       .mtz-header-sep { display: none !important; }
@@ -89,12 +90,12 @@
   </a>
 
   <section style="max-width: 1060px; margin: 0 auto; padding: 64px 28px 8px">
-    <h1 class="mtz-page-title" style="margin: 0; font-size: 44px; line-height: 1.08; font-weight: 900; letter-spacing: -0.02em; color: var(--text); max-width: 760px; text-wrap: pretty">Pick a format to drive engagement.</h1>
-    <p style="margin: 16px 0 0; font-size: 17px; line-height: 1.6; color: var(--muted); max-width: 620px">Every format below is built for one thing: holding attention long enough for the player to act. Browse by mechanic, preview how each one plays, and add the ones you want built for your brand.</p>
+    <h1 class="mtz-page-title" style="margin: 0; font-size: 44px; line-height: 1.08; font-weight: 900; letter-spacing: -0.02em; color: var(--text); max-width: 760px; text-wrap: pretty">Pick a format that <span style="color: var(--accent)">earns attention,</span><br class="mtz-title-break"> not just clicks.</h1>
+    <p style="margin: 16px 0 0; font-size: 17px; line-height: 1.6; color: var(--muted); max-width: 620px">Each one holds players just long enough to act, without breaking their experience. Browse by mechanic, preview how it plays, and add what fits your brand.</p>
 
     <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 32px; padding-bottom: 32px; border-bottom: 1px solid var(--border-hairline)">
       <sc-for list="{{ groups }}" as="group" hint-placeholder-count="5">
-        <x-import component-from-global-scope="MonetizrBlackbeltDesignSystem_e1017f.Tag" from="ds/monetizr-blackbelt-design-system-e1017fb2-12d7-4713-ac6b-7211883feb12/_ds_bundle.js" selected="{{ group.selected }}" onClick="{{ group.select }}" hint-size="auto,34px">{{ group.label }}</x-import>
+        <button type="button" onClick="{{ group.select }}" aria-pressed="{{ group.selected }}" style="display: inline-flex; align-items: center; white-space: nowrap; font-family: var(--font-sans); font-size: 15px; font-weight: 700; line-height: 1; padding: 9px 17px; border-radius: 100px; cursor: pointer; background: {{ group.bg }}; color: {{ group.color }}; border: 1px solid {{ group.border }}; transition: background 160ms var(--ease-out), color 160ms var(--ease-out), border-color 160ms var(--ease-out)">{{ group.label }}</button>
       </sc-for>
     </div>
   </section>
@@ -105,14 +106,14 @@
       <div class="mtz-hero-text" style="display: flex; flex-direction: column; align-items: flex-start; gap: 20px; max-width: 460px">
         <div style="display: flex; align-items: center; gap: 12px">
           <x-import component-from-global-scope="MonetizrBlackbeltDesignSystem_e1017f.Eyebrow" from="ds/monetizr-blackbelt-design-system-e1017fb2-12d7-4713-ac6b-7211883feb12/_ds_bundle.js" hint-size="auto,16px">{{ item.index }}</x-import>
-          <x-import component-from-global-scope="MonetizrBlackbeltDesignSystem_e1017f.Tag" from="ds/monetizr-blackbelt-design-system-e1017fb2-12d7-4713-ac6b-7211883feb12/_ds_bundle.js" hint-size="auto,26px">{{ item.category }}</x-import>
+          <x-import component-from-global-scope="MonetizrBlackbeltDesignSystem_e1017f.Tag" from="ds/monetizr-blackbelt-design-system-e1017fb2-12d7-4713-ac6b-7211883feb12/_ds_bundle.js" size="lg" hint-size="auto,38px">{{ item.category }}</x-import>
         </div>
 
         <h2 class="mtz-hero-title" style="margin: 0; font-size: 46px; line-height: 1.05; font-weight: 900; letter-spacing: -0.02em; color: var(--text); text-wrap: pretty">{{ item.name }}</h2>
 
         <p style="margin: 0; font-size: 16.5px; line-height: 1.55; color: var(--muted); text-wrap: pretty">{{ item.mechanic }}</p>
 
-        <div style="display: flex; flex-direction: column; gap: 14px; margin-top: 8px">
+        <div class="mtz-hero-actions" style="display: flex; flex-direction: column; gap: 14px; margin-top: 8px">
           <button type="button" onClick="{{ item.toggle }}" aria-pressed="{{ item.checked }}" style="display: flex; align-items: center; gap: 14px; padding: 14px 22px 14px 16px; min-height: 48px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; cursor: pointer; font-family: var(--font-sans); font-size: 14.5px; font-weight: 700; color: var(--text); transition: transform 160ms var(--ease-out), border-color 160ms var(--ease-out), background 160ms var(--ease-out)" style-hover="border-color: var(--border-hover); transform: translateY(-2px)" style-active="transform: scale(0.97)">
             <span style="display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 6px; border: 1px solid {{ item.boxBorder }}; background: {{ item.boxBg }}">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--on-accent)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" style="opacity: {{ item.tickOpacity }}"><path d="M20 6 9 17l-5-5"></path></svg>
@@ -337,6 +338,7 @@ class Component extends DCLogic {
       v.addEventListener("error", () => { v.dataset.state = "ready"; this.pump(); }, { once: true });
       v.preload = "auto";
       v.src = v.dataset.src;
+      v.dataset.loadedSrc = v.dataset.src;
       v.load();
       free--;
     }
@@ -368,6 +370,20 @@ class Component extends DCLogic {
 
   attach() {
     this.watchRequest();
+
+    // A <video> node can get recycled at the same list position pointing at
+    // a different item (e.g. switching format-group tabs) — the loader only
+    // ever assigns .src once, so without this it keeps playing the old clip.
+    // Reset anything whose data-src no longer matches what it last loaded.
+    document.querySelectorAll("video[data-pf]").forEach((v) => {
+      if (v.dataset.loadedSrc && v.dataset.loadedSrc !== v.dataset.src) {
+        v.pause && v.pause();
+        v.removeAttribute("src");
+        delete v.dataset.state;
+        delete v.dataset.loadedSrc;
+      }
+    });
+
     if (!this.nearIo) {
       // A wide margin marks everything above and just below the viewport as
       // wanted, so loading always sweeps downward from the top of the page.
@@ -425,7 +441,7 @@ class Component extends DCLogic {
     const visibleTotal = visible.length;
     const items = visible.map((it, i) => ({
       ...it,
-      index: "Format " + pad(i + 1) + " / " + visibleTotal,
+      index: "Format " + (i + 1) + " / " + visibleTotal,
       video: "media/" + it.key + ".mp4",
       videoNote: it.name + " preview goes here",
       boxBg: it.checked ? "var(--accent)" : "transparent",
@@ -440,12 +456,18 @@ class Component extends DCLogic {
       remove: () => this.toggle(it.key),
     }));
 
-    const groups = GROUPS.map(([key, label]) => ({
-      key,
-      label: label + " (" + (groupCounts[key] || 0) + ")",
-      selected: key === activeGroup,
-      select: () => this.setState({ activeGroup: key }),
-    }));
+    const groups = GROUPS.map(([key, label]) => {
+      const on = key === activeGroup;
+      return {
+        key,
+        label: label + " (" + (groupCounts[key] || 0) + ")",
+        selected: on,
+        bg: on ? "var(--accent)" : "var(--surface-recessed)",
+        color: on ? "var(--on-accent)" : "var(--muted)",
+        border: on ? "var(--accent)" : "var(--line)",
+        select: () => this.setState({ activeGroup: key }),
+      };
+    });
 
     return {
       items, picked, groups,
