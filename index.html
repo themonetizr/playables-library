@@ -106,7 +106,7 @@
       <div class="mtz-hero-text" style="display: flex; flex-direction: column; align-items: flex-start; gap: 20px; max-width: 460px">
         <div style="display: flex; align-items: center; gap: 12px">
           <x-import component-from-global-scope="MonetizrBlackbeltDesignSystem_e1017f.Eyebrow" from="ds/monetizr-blackbelt-design-system-e1017fb2-12d7-4713-ac6b-7211883feb12/_ds_bundle.js" hint-size="auto,16px">{{ item.index }}</x-import>
-          <x-import component-from-global-scope="MonetizrBlackbeltDesignSystem_e1017f.Tag" from="ds/monetizr-blackbelt-design-system-e1017fb2-12d7-4713-ac6b-7211883feb12/_ds_bundle.js" size="lg" hint-size="auto,38px">{{ item.category }}</x-import>
+          <x-import component-from-global-scope="MonetizrBlackbeltDesignSystem_e1017f.Tag" from="ds/monetizr-blackbelt-design-system-e1017fb2-12d7-4713-ac6b-7211883feb12/_ds_bundle.js" tone="gold" size="lg" hint-size="auto,38px">{{ item.bestFor }}</x-import>
         </div>
 
         <h2 class="mtz-hero-title" style="margin: 0; font-size: 46px; line-height: 1.05; font-weight: 900; letter-spacing: -0.02em; color: var(--text); text-wrap: pretty">{{ item.name }}</h2>
@@ -256,6 +256,33 @@ const GROUPS = [
   ["puzzles-matching", "Puzzles & Matching"],
   ["interactive-story", "Interactive & Story"],
 ];
+
+// "Best for" marketing objective per format — one of Monetizr's own
+// campaign objectives (Awareness / Engagement / Conversion), plus a fourth,
+// Data Capture, for the two form-based formats.
+const BEST_FOR = {
+  "Sticky Jigsaw": "Awareness", "Jigsaw": "Awareness", "Memory": "Awareness",
+  "Sliding Puzzle": "Awareness", "Video Endcard": "Awareness", "Endcard AI": "Awareness",
+  "Hotspot": "Awareness", "Shelf Order": "Awareness", "Carousel": "Awareness",
+
+  "Shoot": "Engagement", "Runner": "Engagement", "Delivery": "Engagement",
+  "Basketball": "Engagement", "Bounce": "Engagement", "Jump": "Engagement",
+  "Score": "Engagement", "Claw": "Engagement", "10 Seconds": "Engagement",
+  "Shape Snap": "Engagement", "Whack-A-Mole": "Engagement", "Tap To Win": "Engagement",
+  "Catcher": "Engagement", "Clean Screen": "Engagement", "Prediction": "Engagement",
+  "Choices": "Engagement", "Game Night": "Engagement", "Swipe": "Engagement",
+  "Cup Shuffle": "Engagement", "Tile Pop": "Engagement", "Tic-Tac-Toe": "Engagement",
+  "Connect": "Engagement", "Maze": "Engagement", "Mix and Match": "Engagement",
+  "Blast": "Engagement", "Match": "Engagement", "Cut": "Engagement", "Wordle": "Engagement",
+
+  "Shoot To Win": "Conversion", "Pinata": "Conversion", "Break Glass": "Conversion",
+  "Crack Glass": "Conversion", "Case Opening": "Conversion", "3D Spin": "Conversion",
+  "Multilayer Spin": "Conversion", "Simple Slot Machine": "Conversion", "Scratch and Win": "Conversion",
+  "Chest": "Conversion", "Slot": "Conversion", "Spin": "Conversion",
+  "Open Box": "Conversion", "Plinko": "Conversion", "Image Slider": "Conversion", "Endcard": "Conversion",
+
+  "Survey": "Data Capture", "Quiz": "Data Capture",
+};
 
 const GROUP_OF = {
   "Shoot": "sports-arcade", "Runner": "sports-arcade", "Shoot To Win": "sports-arcade",
@@ -431,7 +458,7 @@ class Component extends DCLogic {
     // since a pick made in one group must still show up after switching tabs.
     const allItems = CATALOG.map(([name, category, mechanic]) => {
       const key = slug(name);
-      return { name, category, mechanic, key, group: GROUP_OF[name], checked: !!sel[key] };
+      return { name, category, mechanic, key, group: GROUP_OF[name], bestFor: BEST_FOR[name], checked: !!sel[key] };
     });
 
     const groupCounts = {};
